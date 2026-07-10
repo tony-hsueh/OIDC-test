@@ -1,0 +1,23 @@
+name: test-oidc
+on: workflow_dispatch # 手動觸發,迭代最快
+
+permissions:
+  id-token: write # 沒這行一定失敗,最常見的坑
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: "cloud-run-499504"
+          workload_identity_provider: "projects/450792262831/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider"
+          # 走 SA impersonation 的話再加:
+          # service_account: "my-sa@project.iam.gserviceaccount.com"
+
+      - name: Verify
+        run: |
+          gcloud auth list
+          gcloud projects describe cloud-run-499504
