@@ -12,6 +12,7 @@ jobs:
       - id: auth
         uses: google-github-actions/auth@v3
         with:
+          create_credentials_file: false
           project_id: "cloud-run-499504"
           workload_identity_provider: "projects/450792262831/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider"
           service_account: "test-use@cloud-run-499504.iam.gserviceaccount.com"
