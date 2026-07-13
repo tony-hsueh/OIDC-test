@@ -17,4 +17,4 @@ jobs:
 
       - name: Verify
         run: |
-          gsutil cat gs://test-use-pchome/mono/features/test.txt
+          gcloud storage cat gs://test-use-pchome/mono/features/test.txt
