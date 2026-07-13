@@ -1,4 +1,4 @@
-name: test-oidc
+name: release-production
 on: workflow_dispatch # 手動觸發,迭代最快
 
 permissions:
