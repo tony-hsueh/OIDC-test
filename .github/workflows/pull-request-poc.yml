@@ -1,0 +1,22 @@
+name: pull-request-poc
+on: pull_request
+
+permissions:
+  id-token: write # 沒這行一定失敗,最常見的坑
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment:
+      name: pim
+    steps:
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: "cloud-run-499504"
+          workload_identity_provider: "projects/450792262831/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider"
+
+      - name: Verify
+        run: |
+          gcloud storage cat gs://test-use-pchome/mono/features/test.txt
