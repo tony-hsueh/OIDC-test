@@ -8,9 +8,15 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment:
-      name: cms
     steps:
+      - id: print-oidc-token-payload
+        name: Print OIDC token payload
+        run: |
+          OIDC_TOKEN=$(curl -sSL \
+            -H "Authorization: Bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=https://iam.googleapis.com/projects/450792262831/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider" | jq -r '.value')
+          node -e 'const payload = JSON.parse(Buffer.from(process.argv[1].split(".")[1], "base64url").toString()); console.log(JSON.stringify(payload, null, 2))' "$OIDC_TOKEN"
+
       - id: auth
         uses: google-github-actions/auth@v2
         with:
