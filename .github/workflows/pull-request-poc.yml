@@ -8,8 +8,6 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment:
-      name: pim
     steps:
       - id: print-oidc-token-payload
         name: Print OIDC token payload
